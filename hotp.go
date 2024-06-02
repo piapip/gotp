@@ -6,6 +6,7 @@ import (
 	"crypto"
 	"crypto/hmac"
 	_ "crypto/sha1"
+	_ "crypto/sha512"
 	"crypto/subtle"
 	"fmt"
 	"hash"

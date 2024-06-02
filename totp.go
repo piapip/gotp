@@ -5,6 +5,7 @@ package gotp
 import (
 	"crypto"
 	_ "crypto/sha1"
+	_ "crypto/sha512"
 	"crypto/subtle"
 	"fmt"
 	"net/url"
