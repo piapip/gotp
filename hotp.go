@@ -143,7 +143,7 @@ func NewHOTP(key []byte, counter int64, digits int, truncationOffset int) *HOTP 
 // For example, if you want to use SHA512, then use crypto.SHA512 as a parameter and add 'import _ "crypto/sha512"' statement.
 func NewHOTPHash(key []byte, counter int64, digits int, truncationOffset int, algorithm crypto.Hash) *HOTP {
 	secret := key
-	key = adjustForHash(key, algorithm)
+	// key = adjustForHash(key, algorithm)
 	if digits > len(powers) {
 		panic(fmt.Errorf("maximum supported number of digits is 10"))
 	}
