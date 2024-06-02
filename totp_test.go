@@ -5,6 +5,9 @@ package gotp
 import (
 	"crypto"
 	_ "crypto/sha256"
+	_ "crypto/sha512"
+	"encoding/base64"
+	"fmt"
 	"reflect"
 	"testing"
 	"time"
@@ -185,4 +188,43 @@ func TestTotpUrlParserErrors(t *testing.T) {
 	if err == nil {
 		t.Errorf("Expected to fail because of invalid secret")
 	}
+}
+
+func TestTOTPGenerateOffsetSHA512(t *testing.T) {
+	var (
+		// userid       = "thovinh9997@gmail.com"
+		sharedSecret = []byte("thovinh9997@gmail.comHENNGECHALLENGE003")
+		TX           = 30
+		T0           = int64(0)
+		passwordLen  = 10
+	)
+
+	// key := []byte("12345678901234567890")
+	otp := NewTOTPHash(
+		sharedSecret,
+		passwordLen,
+		TX,
+		T0,
+		crypto.SHA512,
+	)
+	code := otp.At(time.Now())
+	fmt.Println("res 12: ", code)
+
+	fmt.Println(basicAuth("thovinh9997@gmail.com", code))
+
+	if code != "32247374" {
+		t.Errorf("Expected '32247374', but got %s for time=59, digits=8, T0=0", code)
+	}
+}
+
+func TestHTTPBasicAuth(t *testing.T) {
+	passwd := "0728784943"
+	result := basicAuth("thovinh9997@gmail.com", passwd)
+
+	fmt.Println("result: ", result)
+}
+
+func basicAuth(username, password string) string {
+	auth := username + ":" + password
+	return base64.StdEncoding.EncodeToString([]byte(auth))
 }
