@@ -157,7 +157,19 @@ func NewHOTPHash(key []byte, counter int64, digits int, truncationOffset int, al
 	}
 }
 
-var powers = []int{1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000, 1000000000}
+var powers = []int{
+	1,           // digit:  0
+	10,          // digit:  1
+	100,         // digit:  2
+	1000,        // digit:  3
+	10000,       // digit:  4
+	100000,      // digit:  5
+	1000000,     // digit:  6
+	10000000,    // digit:  7
+	100000000,   // digit:  8
+	1000000000,  // digit:  9
+	10000000000, // digit: 10
+}
 
 func int64toBytes(d int64) []byte {
 	result := make([]byte, 8)
